@@ -5,13 +5,24 @@
 #include "machine_list.pb.h"
 using namespace std;
 
-enum eq_type { TREADMILL, WEIGHT_MACHINE };
+/// \file
+
+enum eq_type { TREADMILL, WEIGHT_MACHINE, QUIT, LIST_EQUIPMENT };
 
 // Initialize prototypes.
 Equipment * treadmill_prototype = new Treadmill();
 Equipment * weight_machine_prototype = new WeightMachine();
 
 void get_equipment (const MachineList& m_list, vector<Equipment*>& v) {
+///
+/// The get_equipment function reads the MachineList object retrieved from the
+/// buffer file and recreates each object using the information in the list.
+/// Each object is then stored in a vector for use within the program.
+///
+/// \param m_list	:	The list of equipment read from the protocol buffer.
+/// \param v		:	The vector where the equipment objects will be stored
+///				for use in the program.
+///
 
 	for (int i = 0; i < m_list.machine_size(); i++) {
 
@@ -33,6 +44,14 @@ void get_equipment (const MachineList& m_list, vector<Equipment*>& v) {
 }
 
 void print_equipment_list (const MachineList& m_list) {
+///
+/// The print_equipment_list function reads the equipment stored in the MachineList
+/// buffer object and prints out the type and ID of each piece of equipment currently
+/// active within the program.	
+///
+/// \param m_list	:	The list of equipment read from the protocol buffer.
+///
+
 
 	for (int i = 0; i < m_list.machine_size(); i++) {
 
@@ -58,19 +77,19 @@ int main (int argc, char * argv[]) {
 
 	if (argc != 2) {
 
-		cout << "No path to storage file given." << endl;
+		cout << "Usage : ./main <buffer_file>" << endl;
 		return -1;
 
 	}
 
 	MachineList machine_list;
 
-	// Variables for holding user input.
-	int type;
-	int id;
+	int type;	// Stores the user's input option 
+			// (can be 0, 1, 2, or 3).
+	int id;		// Stores the ID the user wishes to give
+			// to a piece of equipment.
 
-	// Vector holding user-created equipment.
-	vector<Equipment*> ev;
+	vector<Equipment*> ev;	// Vector holding user-created equipment.
 
 	// Read the list of created machines from file.
 	fstream input(argv[1], ios::in | ios::binary);
@@ -97,19 +116,20 @@ int main (int argc, char * argv[]) {
 		cout << ">> ";
 		cin >> type;
 
-		if (type == 2) {
-
+		if (type == QUIT) {
+		// User wishes to quit.
 			break;
 
-		} else if (type == 3) {
-
+		} else if (type == LIST_EQUIPMENT) {
+		// User wishes to see list of objects currently
+		// in use by the program.
 			cout << endl;
 			print_equipment_list(machine_list);
 			cout << endl;
 			continue;
 
 		} else if (type > 3 || type < 0) {
-			
+		// User enters an invalid choice.
 			cout << "You have typed an invalid choice." << endl;
 			continue;
 		
@@ -122,12 +142,12 @@ int main (int argc, char * argv[]) {
 		Machine* machine = machine_list.add_machine();
 
 		if (type == TREADMILL) {
-
+		// Create new Treadmill object.
 			ev.push_back(treadmill_prototype->clone());
 			cout << "Created Treadmill"; 
 
 		} else if (type == WEIGHT_MACHINE) {
-
+		// Create new WeightMachine object.
 			ev.push_back(weight_machine_prototype->clone());
 			cout << "Created Weight Machine";
 
