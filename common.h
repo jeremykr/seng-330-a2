@@ -76,7 +76,7 @@ bool test_unique_ID (int id, const vector<Equipment*> v) {
 /// Test the given ID to make sure that it is unique in the
 /// list of active equipment.
 ///
-/// \param id	:	The give ID of the machine.
+/// \param id	:	The given ID of the machine.
 /// \param v	:	A vector holding the list of equipment
 ///			active within the program.
 ///
