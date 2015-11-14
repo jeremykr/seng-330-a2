@@ -1,1 +1,12 @@
+For installation on Linux machines.
 
+1.  Download and unpack the .zip file from the repository.
+2.  Download and install Google Protocol Buffers from the google/protobuf repository. Make sure the libraries are            installed in /usr/lib and not /usr/local/lib by running the initial ./configure with the "--prefix=/usr" flag.
+3.  For the unit tests, make sure you have the Google testing framework installed, with the libraries installed in 
+    /usr/lib.
+4.  If you wish to generate documentation, make sure Doxygen is installed.
+5.  To compile the program, run make in the project directory.
+6.  To run the program, type ./main followed by the name of the file that will be used by the protocol buffers.
+7.  If you wish to compile and run the unit tests, compile them with "make tests" and run with ./tests
+
+Jeremy Krenbrink, Nov. 2015
